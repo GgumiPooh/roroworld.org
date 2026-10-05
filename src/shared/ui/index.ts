@@ -7,5 +7,6 @@ export {
   type ImageStatus,
   type ImageWithPlaceholderProps,
 } from "./ImageWithPlaceholder";
+export { JsonLd, type JsonLdProps } from "./JsonLd";
 export { LayoutContainer, type LayoutContainerProps } from "./LayoutContainer";
 export { Skeleton, type SkeletonProps } from "./Skeleton";
