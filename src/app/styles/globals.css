@@ -1,0 +1,155 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-apricot-100 font-primary;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  *:disabled {
+    @apply cursor-not-allowed;
+  }
+}
+
+@theme {
+  --font-primary: "Pretendard", sans-serif;
+
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-green-50: #f1f7ee;
+  --color-green-100: #e2edda;
+  --color-green-200: #c6ddb9;
+  --color-green-300: #a2c78f;
+  --color-green-400: #83b06b;
+  --color-green-500: #64944e;
+  --color-green-600: #4d753b;
+  --color-green-700: #3c5b30;
+  --color-green-800: #334a2a;
+  --color-green-900: #2b3c25;
+  --color-green-950: #162112;
+
+  --color-gray-50: #f6f6f6;
+  --color-gray-100: #e7e7e7;
+  --color-gray-200: #d1d1d1;
+  --color-gray-300: #b0b0b0;
+  --color-gray-400: #888888;
+  --color-gray-500: #6d6d6d;
+  --color-gray-600: #5d5d5d;
+  --color-gray-700: #4f4f4f;
+  --color-gray-800: #454545;
+  --color-gray-900: #3d3d3d;
+  --color-gray-950: #242424;
+
+  --color-apricot-50: #faf7f6;
+  --color-apricot-100: #f4edec;
+  --color-apricot-200: #ebe0dd;
+  --color-apricot-300: #dcc9c5;
+  --color-apricot-400: #c6aaa3;
+  --color-apricot-500: #b18e86;
+  --color-apricot-600: #98736a;
+  --color-apricot-700: #7f5e56;
+  --color-apricot-800: #6a504a;
+  --color-apricot-900: #5b4641;
+  --color-apricot-950: #2f2320;
+
+  --color-earth-50: #f5f4f0;
+  --color-earth-100: #e8e6df;
+  --color-earth-200: #d4d1c2;
+  --color-earth-300: #b9b59d;
+  --color-earth-400: #938e6c;
+  --color-earth-500: #837f5f;
+  --color-earth-600: #676449;
+  --color-earth-700: #504e3b;
+  --color-earth-800: #424132;
+  --color-earth-900: #3a392d;
+  --color-earth-950: #1e1d15;
+
+  --color-plum-50: #f9f6f8;
+  --color-plum-100: #f4eff2;
+  --color-plum-200: #eae0e5;
+  --color-plum-300: #d9c8d0;
+  --color-plum-400: #c1a5b2;
+  --color-plum-500: #ac8898;
+  --color-plum-600: #936c7b;
+  --color-plum-700: #7d5966;
+  --color-plum-800: #684c55;
+  --color-plum-900: #59424a;
+  --color-plum-950: #332429;
+
+  --color-slateBlue-50: #f6f7f9;
+  --color-slateBlue-100: #ebeef3;
+  --color-slateBlue-200: #d3d9e4;
+  --color-slateBlue-300: #adbacc;
+  --color-slateBlue-400: #8195af;
+  --color-slateBlue-500: #617896;
+  --color-slateBlue-600: #4c5f7d;
+  --color-slateBlue-700: #3f4e65;
+  --color-slateBlue-800: #374355;
+  --color-slateBlue-900: #313a49;
+  --color-slateBlue-950: #252b37;
+
+  --breakpoint-xs: 480px;
+  --breakpoint-3xl: 1920px;
+
+  --animate-angle-rotate: rotate 1s steps(8, end) infinite;
+
+  @keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(-200%);
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-pretty {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent;
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.5);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(136, 136, 136, 0.7);
+  }
+}
