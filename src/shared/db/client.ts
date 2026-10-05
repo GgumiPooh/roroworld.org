@@ -27,6 +27,8 @@ export function getDb(): Database {
   const client =
     globalThis.__dbClient ??
     postgres(connectionString, {
+      connect_timeout: 10,
+      idle_timeout: 20,
       max: isProduction ? 1 : 10,
       prepare: false,
     });
