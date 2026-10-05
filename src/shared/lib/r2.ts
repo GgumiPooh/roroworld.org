@@ -28,9 +28,7 @@ function getR2Client(): S3Client {
     region: "auto",
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    globalThis.__r2Client = client;
-  }
+  globalThis.__r2Client = client;
 
   return client;
 }

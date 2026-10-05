@@ -21,17 +21,20 @@ export function getDb(): Database {
 
   // INFO: Lazy evaluate DATABASE_URL so Next.js build succeeds without env vars present.
   const connectionString = ensureEnv("DATABASE_URL");
-  const client = globalThis.__dbClient ?? postgres(connectionString);
+  const isProduction = process.env.NODE_ENV === "production";
 
-  if (process.env.NODE_ENV !== "production") {
-    globalThis.__dbClient = client;
-  }
+  // INFO: prepare: false is required for Supabase transaction pooler (port 6543) compatibility.
+  const client =
+    globalThis.__dbClient ??
+    postgres(connectionString, {
+      max: isProduction ? 1 : 10,
+      prepare: false,
+    });
 
   const db = drizzle(client, { schema });
 
-  if (process.env.NODE_ENV !== "production") {
-    globalThis.__dbInstance = db;
-  }
+  globalThis.__dbClient = client;
+  globalThis.__dbInstance = db;
 
   return db;
 }
