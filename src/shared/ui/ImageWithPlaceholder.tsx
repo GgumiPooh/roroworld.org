@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import {
   type ComponentProps,
   type ReactNode,
@@ -26,6 +27,7 @@ export type ImageWithPlaceholderProps = {
   fallbackOnError?: boolean;
   fallbackSrc?: string;
   renderPlaceholder?: () => ReactNode;
+  renderFallback?: () => ReactNode;
   onStatusChange?: (status: ImageStatus) => void;
 } & Omit<ComponentProps<"img">, "onError" | "onLoad" | "onLoadStart">;
 
@@ -39,7 +41,8 @@ export function ImageWithPlaceholder({
   alt,
   fallbackOnError = true,
   fallbackSrc,
-  renderPlaceholder = () => <Skeleton className="size-full" />,
+  renderPlaceholder = () => <Skeleton className="size-full rounded-[inherit]" />,
+  renderFallback,
   src: sourceProp,
   onStatusChange,
   ...props
@@ -90,6 +93,12 @@ export function ImageWithPlaceholder({
     <div className={cn("relative overflow-hidden", className)}>
       {status === IMAGE_STATUS.LOADING && (
         <div className="absolute inset-0">{renderPlaceholder?.()}</div>
+      )}
+
+      {status === IMAGE_STATUS.FAILED && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-800/40 text-gray-500">
+          {renderFallback ? renderFallback() : <PhotoIcon className="size-6 text-gray-500/70" />}
+        </div>
       )}
 
       {/* eslint-disable-next-line @next/next/no-img-element */}

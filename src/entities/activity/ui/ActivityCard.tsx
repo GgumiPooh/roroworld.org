@@ -27,7 +27,8 @@ export function ActivityCard({ className, activity }: ActivityCardProps) {
       <div className="ml-3 flex flex-row md:ml-30">
         <div className="mr-5 w-30 shrink-0 md:mr-10 md:w-45">
           <ImageWithPlaceholder
-            className="h-auto w-full rounded-lg shadow-[0_13px_25px_rgba(97,120,150,0.4)]"
+            className="aspect-square w-full rounded-lg shadow-[0_13px_25px_rgba(97,120,150,0.4)]"
+            imgClassName="size-full object-cover"
             alt="activity thumbnail"
             src={imageUrl}
           />

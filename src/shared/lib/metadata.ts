@@ -10,7 +10,7 @@ export function findMetadataUrl(metadata: Maybe<MetadataEntry[]>, targetType: st
     return "";
   }
   const matched = metadata.find((item) => item.type === targetType);
-  return matched?.url ?? metadata[0]?.url ?? "";
+  return matched?.url ?? "";
 }
 
 export function findCoverUrl(metadata: Maybe<MetadataEntry[]>): string {
