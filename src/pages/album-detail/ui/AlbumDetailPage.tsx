@@ -2,7 +2,8 @@
 
 import { AlbumTrackList, useAlbums } from "@/entities/album";
 import { cn } from "@/shared/lib";
-import { BlurBackground, Button, ImageWithPlaceholder, Skeleton } from "@/shared/ui";
+import { Button, ImageWithPlaceholder, Skeleton } from "@/shared/ui";
+import { usePageBackground } from "@/widgets/background";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -21,15 +22,13 @@ export function AlbumDetailPage({ className, albumId }: AlbumDetailPageProps) {
     [albumsView, albumId],
   );
 
+  usePageBackground({
+    alt: album?.titleText,
+    src: album?.coverUrl,
+  });
+
   return (
     <div className={cn("relative overflow-y-auto pt-30 md:pt-50", className)}>
-      <BlurBackground
-        imgClassName="scale-105 blur-md"
-        alt={album?.titleText}
-        src={album?.coverUrl}
-      />
-      <div className="fixed inset-0 -z-1 bg-gray-800/60" />
-
       <div className="z-2 mx-auto w-[min(92vw,900px)]">
         <div className="relative mx-5 mb-10">
           <Link className="mb-10 inline-flex text-sm text-plum-200" href="/albums">

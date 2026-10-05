@@ -2,7 +2,7 @@
 
 import { ActivityCard, type Sort, useActivities } from "@/entities/activity";
 import { cn } from "@/shared/lib";
-import { BlurBackground, Skeleton } from "@/shared/ui";
+import { Skeleton } from "@/shared/ui";
 import { ActivityControls } from "@/widgets/activity-controls";
 import { useEffect, useRef, useState } from "react";
 
@@ -40,8 +40,6 @@ export function ActivityPage({ className }: ActivityPageProps) {
 
   return (
     <div className={cn("relative scrollbar-hide h-dvh overflow-y-auto pt-50", className)}>
-      <BlurBackground overlayClassName="bg-gray-400/50" overlay />
-
       <h1 className="mb-50 text-center text-5xl font-bold text-[#faf8e1] md:mb-70 md:text-8xl">
         Activity
       </h1>

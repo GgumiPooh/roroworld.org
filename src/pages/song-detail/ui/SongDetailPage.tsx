@@ -5,7 +5,8 @@ import { SongInfo } from "@/entities/song";
 import { useAuthOverlay } from "@/features/auth";
 import { CommentInput } from "@/features/comment";
 import { cn } from "@/shared/lib";
-import { BlurBackground, Button } from "@/shared/ui";
+import { Button } from "@/shared/ui";
+import { usePageBackground } from "@/widgets/background";
 import { CommentList, type CommentListHandle } from "@/widgets/comment-section";
 import { useYouTubePlayer } from "@/widgets/youtube-player";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -30,6 +31,11 @@ export function SongDetailPage({ className, albumId, trackNumber }: SongDetailPa
     [albumsView, albumId],
   );
 
+  usePageBackground({
+    alt: album?.titleText,
+    src: album?.coverUrl,
+  });
+
   function handleNavigateBack() {
     if (album?.albumType === "DIGITAL_SINGLE") {
       router.push("/albums");
@@ -40,14 +46,6 @@ export function SongDetailPage({ className, albumId, trackNumber }: SongDetailPa
 
   return (
     <div className={cn("relative overflow-y-auto pt-40 md:pt-50", className)}>
-      <BlurBackground
-        imgClassName="scale-105 blur-md"
-        alt={album?.titleText}
-        src={album?.coverUrl}
-      />
-
-      <div className="fixed inset-0 -z-1 bg-gray-800/60" />
-
       <div className="z-2 mx-auto w-[min(92vw,1000px)]">
         <Button
           className="mb-10 pl-10 text-sm text-plum-200"

@@ -1,7 +1,7 @@
 import { CONTACT_EMAIL } from "@/shared/config";
 import { BlogIcon, InstagramIcon, SignIcon, YoutubeIcon } from "@/shared/icons";
 import { cn } from "@/shared/lib";
-import { BlurBackground, Button, ExternalLink } from "@/shared/ui";
+import { Button, ExternalLink } from "@/shared/ui";
 
 export type HomePageProps = {
   className?: string;
@@ -18,7 +18,6 @@ const SOCIAL_LINKS = {
 export function HomePage({ className, contactEmail = CONTACT_EMAIL }: HomePageProps) {
   return (
     <div className={cn("relative h-dvh text-black", className)}>
-      <BlurBackground />
       <SignIcon className="absolute bottom-[8%] left-[2%] w-60 text-[#dccca1] sm:w-100 md:bottom-20 md:left-5 md:w-120" />
       <div className="absolute bottom-[2.5%] left-[3%]">
         <h3 className="text-left text-xs text-[#c4bda8] md:text-sm">

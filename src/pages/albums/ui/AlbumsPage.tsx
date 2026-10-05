@@ -2,7 +2,7 @@
 
 import { AlbumCard, useAlbums } from "@/entities/album";
 import { cn } from "@/shared/lib";
-import { BlurBackground, Skeleton } from "@/shared/ui";
+import { Skeleton } from "@/shared/ui";
 import { type AlbumSort, SortOptions, YearFilter } from "@/widgets/album-controls";
 import { useMemo, useState } from "react";
 
@@ -34,8 +34,6 @@ export function AlbumsPage({ className }: AlbumsPageProps) {
 
   return (
     <div className={cn("relative scrollbar-hide h-dvh overflow-y-auto pt-50", className)}>
-      <BlurBackground overlayClassName="bg-gray-400/50" overlay />
-
       <h1 className="mb-35 text-center text-5xl font-bold text-[#faf8e1] md:mb-60 md:text-8xl">
         Albums
       </h1>

@@ -6,6 +6,7 @@ export type BlurBackgroundProps = {
   imgClassName?: string;
   overlayClassName?: string;
   alt?: string;
+  hidden?: boolean;
   overlay?: boolean;
   src?: string;
 };
@@ -15,6 +16,7 @@ export function BlurBackground({
   imgClassName = "",
   overlayClassName = "bg-gray-400/50",
   alt = "background",
+  hidden = false,
   overlay = false,
   src,
 }: BlurBackgroundProps) {
@@ -22,14 +24,21 @@ export function BlurBackground({
     src ?? (isMobile() ? "/images/home-banner7.webp" : "/images/home-banner9.webp");
 
   return (
-    <div className={className}>
+    <div className={cn(hidden && "hidden", className)}>
       <ImageWithPlaceholder
         className="fixed inset-0 -z-2 h-dvh w-full"
         imgClassName={cn("object-cover object-center", imgClassName)}
         alt={alt}
+        renderPlaceholder={() => null}
         src={resolvedSrc}
       />
-      {overlay && <div className={cn("fixed inset-0 -z-1", overlayClassName)} />}
+      <div
+        className={cn(
+          "pointer-events-none fixed inset-0 -z-1 transition-all duration-300",
+          overlayClassName,
+          overlay ? "opacity-100" : "opacity-0",
+        )}
+      />
     </div>
   );
 }
