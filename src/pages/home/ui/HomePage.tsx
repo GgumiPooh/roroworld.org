@@ -1,9 +1,11 @@
+import { CONTACT_EMAIL } from "@/shared/config";
 import { BlogIcon, InstagramIcon, SignIcon, YoutubeIcon } from "@/shared/icons";
 import { cn } from "@/shared/lib";
 import { BlurBackground, Button, ExternalLink } from "@/shared/ui";
 
 export type HomePageProps = {
   className?: string;
+  contactEmail?: string;
 };
 
 const SOCIAL_LINKS = {
@@ -13,7 +15,7 @@ const SOCIAL_LINKS = {
   youtube: "https://www.youtube.com/@hanroro6055",
 } as const;
 
-export function HomePage({ className }: HomePageProps) {
+export function HomePage({ className, contactEmail = CONTACT_EMAIL }: HomePageProps) {
   return (
     <div className={cn("relative h-dvh text-black", className)}>
       <BlurBackground />
@@ -22,7 +24,7 @@ export function HomePage({ className }: HomePageProps) {
         <h3 className="text-left text-xs text-[#c4bda8] md:text-sm">
           NOT OFFICIAL SITE
           <br />
-          CONTACT : hyoeun.jin2@gmail.com
+          CONTACT : {contactEmail}
         </h3>
       </div>
       <div className="absolute right-[3%] bottom-[2.5%] flex flex-col gap-10 sm:gap-20 md:bottom-15">

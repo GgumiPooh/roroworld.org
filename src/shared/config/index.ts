@@ -1,3 +1,4 @@
+export { CONTACT_EMAIL, DEFAULT_CONTACT_EMAIL } from "./contact";
 export { ensureEnv, getEnv } from "./env";
 export {
   ACTIVITY_ROUTE,
