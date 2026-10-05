@@ -19,6 +19,20 @@ function getBaseOrigin(req: Request): string {
   return `${proto}://${host}`;
 }
 
+function getOAuthRedirectUri(provider: OAuthProvider, req: Request): string {
+  const configuredBase = process.env.OAUTH_REDIRECT_BASE_URL?.trim();
+  if (configuredBase) {
+    return `${configuredBase.replace(/\/+$/, "")}/login/oauth2/code/${provider}`;
+  }
+  const isProduction = process.env.NODE_ENV === "production";
+  if (isProduction) {
+    // INFO: Defaults to api.roroworld.org to preserve existing Naver/Kakao developer console registration
+    return `https://api.roroworld.org/login/oauth2/code/${provider}`;
+  }
+  const origin = getBaseOrigin(req);
+  return `${origin}/login/oauth2/code/${provider}`;
+}
+
 export async function GET(req: Request, context: RouteContext): Promise<Response> {
   const rawParams = await context.params;
   const parsed = providerSchema.safeParse(rawParams.provider);
@@ -29,19 +43,21 @@ export async function GET(req: Request, context: RouteContext): Promise<Response
 
   const provider = parsed.data as OAuthProvider;
   const state = generateSecureRandomToken();
-  const origin = getBaseOrigin(req);
-  const redirectUri = `${origin}/login/oauth2/code/${provider}`;
+  const redirectUri = getOAuthRedirectUri(provider, req);
 
   try {
     const authUrl = getOAuthAuthorizationUrl(provider, state, redirectUri);
     const isProduction = process.env.NODE_ENV === "production";
     const secureSuffix = isProduction ? "; Secure" : "";
+    const cookieDomain =
+      process.env.COOKIE_DOMAIN?.trim() || (isProduction ? ".roroworld.org" : "");
+    const domainSuffix = cookieDomain ? `; Domain=${cookieDomain}` : "";
 
     const headers = new Headers();
     // INFO: Store state in a short-lived cookie for CSRF validation during callback
     headers.append(
       "Set-Cookie",
-      `oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=300${secureSuffix}`,
+      `oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=300${secureSuffix}${domainSuffix}`,
     );
     headers.set("Location", authUrl);
 

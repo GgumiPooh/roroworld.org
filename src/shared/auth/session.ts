@@ -45,6 +45,15 @@ export async function getAuthenticatedUserId(req: Request): Promise<Nullable<num
   return authUser ? authUser.userId : null;
 }
 
+function getCookieDomainSuffix(): string {
+  const customDomain = process.env.COOKIE_DOMAIN?.trim();
+  if (customDomain) {
+    return `; Domain=${customDomain}`;
+  }
+  const isProduction = process.env.NODE_ENV === "production";
+  return isProduction ? "; Domain=.roroworld.org" : "";
+}
+
 export function setAuthCookies(
   resHeaders: Headers,
   accessToken: string,
@@ -53,18 +62,19 @@ export function setAuthCookies(
   // INFO: In production, mark cookies Secure for HTTPS transport protection.
   const isProduction = process.env.NODE_ENV === "production";
   const secureSuffix = isProduction ? "; Secure" : "";
+  const domainSuffix = getCookieDomainSuffix();
 
   const accessMaxAge = AN_HOUR / A_SECOND;
   resHeaders.append(
     "Set-Cookie",
-    `access_token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${accessMaxAge}${secureSuffix}`,
+    `access_token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${accessMaxAge}${secureSuffix}${domainSuffix}`,
   );
 
   if (refreshToken) {
     const refreshMaxAge = (30 * A_DAY) / A_SECOND;
     resHeaders.append(
       "Set-Cookie",
-      `refresh_token=${refreshToken}; Path=/api/auth; HttpOnly; SameSite=Lax; Max-Age=${refreshMaxAge}${secureSuffix}`,
+      `refresh_token=${refreshToken}; Path=/api/auth; HttpOnly; SameSite=Lax; Max-Age=${refreshMaxAge}${secureSuffix}${domainSuffix}`,
     );
   }
 }
@@ -72,18 +82,19 @@ export function setAuthCookies(
 export function clearAuthCookies(resHeaders: Headers): void {
   const isProduction = process.env.NODE_ENV === "production";
   const secureSuffix = isProduction ? "; Secure" : "";
+  const domainSuffix = getCookieDomainSuffix();
 
   resHeaders.append(
     "Set-Cookie",
-    `access_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}`,
+    `access_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}${domainSuffix}`,
   );
   resHeaders.append(
     "Set-Cookie",
-    `refresh_token=; Path=/api/auth; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}`,
+    `refresh_token=; Path=/api/auth; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}${domainSuffix}`,
   );
   resHeaders.append(
     "Set-Cookie",
-    `JSESSIONID=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}`,
+    `JSESSIONID=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secureSuffix}${domainSuffix}`,
   );
 }
 
