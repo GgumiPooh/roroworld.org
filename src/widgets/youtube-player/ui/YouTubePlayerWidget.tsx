@@ -32,6 +32,7 @@ export function YouTubePlayerWidget({ className, videoId, onClose }: YouTubePlay
         className="h-[110px] w-[196px] md:h-[158px] md:w-[280px] lg:h-[202px] lg:w-[360px]"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
+        referrerPolicy="strict-origin-when-cross-origin"
         src={embedUrl}
         title="YouTube video player"
       />
